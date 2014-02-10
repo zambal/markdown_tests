@@ -1,0 +1,2 @@
+[ "hoedown": {:git, "git://github.com/hoedown/hoedown.git", "234354e4ad2155795fd431c9a96660f8a35bfb50", []},
+  "markdown": {:git, "git://github.com/zambal/markdown.git", "792a414de074d96ac47b5b52d212b7197ce04462", [branch: "use_dirty_schedulers"]} ]
