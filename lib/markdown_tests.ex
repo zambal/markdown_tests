@@ -74,7 +74,7 @@ defmodule MarkdownTests do
   end
 
   defp concatenated_docs() do
-    lc p inlist :code.get_path(), String.match?(p, ~r/elixir/) do
+    lc p inlist :code.get_path(), to_string(p) |> String.match?(~r/elixir/) do
       lc f inlist File.ls!(p), String.contains?(f, ".beam") and String.match?(f, ~r/^[A-Z]/) do
         mod = String.replace(f, ".beam", "") |> binary_to_atom()
         { _, mod_doc } = mod.__info__(:moduledoc) 
