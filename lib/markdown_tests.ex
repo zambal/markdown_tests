@@ -68,6 +68,8 @@ defmodule MarkdownTests do
         ts = :os.timestamp
         send(pid, { n - 1, [ts, :timer.now_diff(ts, h) | t] })
         roundtrip(id, pid)
+    after
+      2_000 -> :ok
     end
   end
 
