@@ -1,6 +1,10 @@
 defmodule MarkdownTests do
-  def benchmark(doc_size \\ 10000, doc_times \\ 200, ring_multiplier \\ 40) do
-    doc(doc_size, doc_times)
+  def benchmark(opts \\ []) do
+    dirty_scheduler = if nil?(opts[:dirty_scheduler]), do: true, else: opts[:dirty_scheduler]
+    doc_size        = opts[:doc_size] || 10000
+    doc_times       = opts[:doc_times] || 200
+    ring_multiplier = opts[:ring_multiplier] || 40
+    doc(doc_size, doc_times, dirty_scheduler)
     ring(ring_multiplier) |> stats()
   end
 
@@ -27,12 +31,12 @@ defmodule MarkdownTests do
     copies <> part
   end
 
-  defp doc(size, times) do
+  defp doc(size, times, dirty_scheduler) do
     spawn(fn ->
       doc = create_markdown(size)
       t_start = :os.timestamp
       Enum.each(1..times, fn _ ->
-        Markdown.to_html(doc)
+        Markdown.to_html(doc, [], dirty_scheduler)
         receive do
           _ -> :ok
         after
